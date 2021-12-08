@@ -708,7 +708,7 @@ function deleteSelectedObject(event) {
 
 function savePDF() {
     // pdf.savePdf();
-    pdf.savePdf(`${new Date}-sample.pdf`); // save with given file name
+    pdf.savePdf(`${new Date().getTime()}-assignment.pdf`); // save with given file name
 	var blob = doc.output('blob');
 	// console.log("Outputted file blob", blob);
 	const url = window.location.href;
@@ -724,26 +724,6 @@ function savePDF() {
 		formData.append("subjectId", tokenData.subjectId);
 		formData.append("file", blob);
 		loading = true;
-		$(document).ready(function(){
-			let cont='';
-			if(loading){
-				document.onclick("save-btn", function(){
-					cont += `
-					<div class="spinner-border text-warning" role="status">
-						<span class="sr-only">Loading...</span>
-					</div>
-					`
-					document.getElementById("save-cont").innerHTML = cont;
-				})
-				
-			} else {
-				
-				cont += `
-					<button id="save-btn" class="btn btn-light btn-sm" onclick="savePDF()"><i class="fa fa-save"></i> Save</button>
-				`
-				document.getElementById("save-cont").innerHTML = cont;
-			}
-		})
 		await axios.post('https://quick-proxy.herokuapp.com/https://api.smartclass.rw/apii/InsertCorrection',formData)
 		.then(res=> {
 			loading=false;
